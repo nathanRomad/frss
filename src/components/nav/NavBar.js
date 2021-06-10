@@ -8,11 +8,11 @@ export const NavBar = (props) => {
             <li className="navbar__item">
                 <Link className="nav-link" to="/">Home</Link></li>
             {
-                (localStorage.getItem("lu_token") !== null) ?
+                (localStorage.getItem("frss_token") !== null) ?
                     <li className="nav-item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("lu_token")
+                                localStorage.removeItem("frss_token")
                                 props.history.push({ pathname: "/" })
                             }}
                         >Logout</button>
