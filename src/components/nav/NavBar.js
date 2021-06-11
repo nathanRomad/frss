@@ -7,6 +7,8 @@ export const NavBar = (props) => {
         <ul className="navbar">
             <li className="navbar__item">
                 <Link className="nav-link" to="/">Home</Link></li>
+            <li className="navbar__item">
+                <Link className="nav-link" to="/scoresheet">Score Sheet</Link></li>
             {
                 (localStorage.getItem("frss_token") !== null) ?
                     <li className="nav-item">
