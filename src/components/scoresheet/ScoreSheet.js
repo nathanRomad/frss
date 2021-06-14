@@ -6,18 +6,33 @@ import { QuestionContext } from "./QuestionProvider"
 
 export const ScoreSheet = () => {
     const history = useHistory()
-    const { gameId } = useParams()
+    // const {  } = useParams()
 
-    const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
+    const { answers, createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
+    // console.log('currentAnswerList: ', currentAnswerList);
 
     useEffect(() => {
         getQuestions()
+            .then(() => getAnswers())
+            // .then(() => {
+            //     let newAnswerList = []
+            //     for (answer in answers) {
+            //         let newAnswer = {
+            //             id: answer.id,
+            //             input_answer: answer.input_answer,
+            //             option_id: answer.option_id.id,
+            //             question_id: answer.question_id.id
+            //         }
+            //         newAnswerList.push(newAnswer)
+            //     }
+            //     setCurrentAnswerList(newAnswerList)
+            //     })
     }, [])
 
     const handleInputChange = e => {
-        console.log(currentAnswerList)
+        // console.log(currentAnswerList)
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -64,7 +79,7 @@ export const ScoreSheet = () => {
 
     return (
         <>
-        {/* {console.log(currentAnswerList)} */}
+            {/* {console.log(currentAnswerList)} */}
             <form>
                 <h2>Answer Form</h2>
                 <fieldset>
@@ -103,6 +118,16 @@ export const ScoreSheet = () => {
                         })
                     }
                 </fieldset>
+                <button type="submit"
+                    onClick={evt => {
+                        // Prevent form from being submitted
+                        evt.preventDefault()
+                        // Send POST request to your API
+                        createAnswer(currentAnswerList)
+                            .then(() => history.push("/"))
+                    }
+                    }
+                    className="btn btn-primary">Submit All Answers</button>
             </form >
         </>
     )
