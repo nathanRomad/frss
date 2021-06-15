@@ -2,21 +2,19 @@ import React, { useContext, useState, useEffect } from "react"
 import { useHistory, useParams } from 'react-router-dom'
 import { AnswerContext } from "./AnswerProvider"
 import { QuestionContext } from "./QuestionProvider"
-// import { Answers } from "./QuestionProvider.js"
 
 export const ScoreSheet = () => {
     const history = useHistory()
-    // const {  } = useParams()
-
     const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
-    // console.log('currentAnswerList: ', currentAnswerList);
+    console.log('currentAnswerList: ', currentAnswerList);
 
     useEffect(() => {
         getQuestions()
             .then(() => getAnswers())
             .then((answers) => {
+                // console.log('answers: ', answers);
                 let newAnswerList = []
                 answers.forEach(answer => {
                     // console.log('answer: ', answer);
@@ -27,9 +25,9 @@ export const ScoreSheet = () => {
                         question_id: answer.question_id.id
                     }
                     newAnswerList.push(newAnswer)
-            })
-                setCurrentAnswerList(newAnswerList)
                 })
+                setCurrentAnswerList(newAnswerList)
+            })
     }, [])
 
     const handleInputChange = e => {
@@ -39,10 +37,13 @@ export const ScoreSheet = () => {
             option_id: null,
             question_id: e.target.id
         }
-        let newAnswerList = currentAnswerList
+        let newAnswerList = [...currentAnswerList]
         let arrayChanged = false
         newAnswerList.forEach(answer => {
-            if (answer.question_id && answer.question_id === newAnswer.question_id) {
+            if (answer.question_id && parseInt(answer.question_id) === parseInt(newAnswer.question_id)) {
+                if (answer.id) {
+                    newAnswer.id = answer.id
+                }
                 arrayChanged = true
                 let answerIndex = newAnswerList.indexOf(answer)
                 newAnswerList.splice(answerIndex, 1, newAnswer)
@@ -56,16 +57,21 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        // console.log(currentAnswerList)
+        // debugger
         let newAnswer = {
             input_answer: null,
-            option_id: e.target.value,
-            question_id: e.target.id
+            option_id: parseInt(e.target.value),
+            question_id: parseInt(e.target.id)
         }
-        let newAnswerList = currentAnswerList
+        let newAnswerList = [...currentAnswerList]
         let arrayChanged = false
         newAnswerList.forEach(answer => {
-            if (answer.question_id && answer.question_id === newAnswer.question_id) {
+            if (answer.question_id && parseInt(answer.question_id) === parseInt(newAnswer.question_id)) {
+                // debugger
+                if (answer.id) {
+                    newAnswer.id = answer.id
+                }
+                // console.log(newAnswer)
                 arrayChanged = true
                 let answerIndex = newAnswerList.indexOf(answer)
                 newAnswerList.splice(answerIndex, 1, newAnswer)
@@ -82,15 +88,16 @@ export const ScoreSheet = () => {
         <>
             <form>
                 <h2>Answer Form</h2>
+                {/* {console.log("render", currentAnswerList.find(answer => parseInt(answer.question_id) === 2))} */}
                 <fieldset>
                     {
                         questions.map(question => {
-                            let currentAnswer = currentAnswerList.find(answer => answer.question_id === question.id)
-                            console.log('currentAnswer: ', currentAnswer);
+                            let currentAnswer = () => currentAnswerList.find(answer => answer.question_id === question.id)
+                            // console.log('currentAnswer: ', currentAnswer());
                             if (question.type === 'select') {
-                                return <div className="form-group">
+                                return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
-                                    <select id={question.id} value={currentAnswer?.option_id} required autoFocus className="form-control"
+                                    <select id={question.id} value={currentAnswer()?.option_id} required autoFocus className="form-control"
                                         onChange={handleOptionChange}>
                                         <option key="0" value="0">Please choose an option... </option>
                                         {question.options_set?.map(option => {
@@ -99,24 +106,25 @@ export const ScoreSheet = () => {
                                     </select>
                                 </div>
                             } else if (question.type === 'radio') {
-                                return <div className="form-group">
+                                return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
                                     {question.options_set?.map(option => {
-                                        return <> <input name={"question" + question.id} type="radio" id={question.id} value={option.id} checked={currentAnswer?.option_id === option.id} required className="form-control"
+                                        return <> <input name={"question" + question.id} type="radio" id={question.id} key={option.id}
+                                            value={option.id} checked={parseInt(currentAnswer()?.option_id) === parseInt(option.id)} required className="form-control"
                                             onChange={handleOptionChange}
                                         />
                                             <label id={question.id} >{option.text}</label> </>
                                     })}
                                 </div>
                             } else if (question.type === 'input') {
-                                return <div className="form-group">
+                                return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
-                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id} value={currentAnswer?.input_answer} required className="form-control"
+                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id} value={currentAnswer()?.input_answer} required className="form-control"
                                         onChange={handleInputChange}
                                     />
                                 </div>
                             }
-                            return <label> {question.text} </label>
+                            // return <label> {question.text} </label>
                         })
                     }
                 </fieldset>
