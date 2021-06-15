@@ -8,7 +8,7 @@ export const ScoreSheet = () => {
     const history = useHistory()
     // const {  } = useParams()
 
-    const { answers, createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
+    const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
     // console.log('currentAnswerList: ', currentAnswerList);
@@ -16,19 +16,20 @@ export const ScoreSheet = () => {
     useEffect(() => {
         getQuestions()
             .then(() => getAnswers())
-            // .then(() => {
-            //     let newAnswerList = []
-            //     for (answer in answers) {
-            //         let newAnswer = {
-            //             id: answer.id,
-            //             input_answer: answer.input_answer,
-            //             option_id: answer.option_id.id,
-            //             question_id: answer.question_id.id
-            //         }
-            //         newAnswerList.push(newAnswer)
-            //     }
-            //     setCurrentAnswerList(newAnswerList)
-            //     })
+            .then((answers) => {
+                let newAnswerList = []
+                answers.forEach(answer => {
+                    // console.log('answer: ', answer);
+                    let newAnswer = {
+                        id: answer.id,
+                        input_answer: answer.input_answer,
+                        option_id: answer.option_id?.id,
+                        question_id: answer.question_id.id
+                    }
+                    newAnswerList.push(newAnswer)
+            })
+                setCurrentAnswerList(newAnswerList)
+                })
     }, [])
 
     const handleInputChange = e => {
@@ -55,7 +56,7 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        console.log(currentAnswerList)
+        // console.log(currentAnswerList)
         let newAnswer = {
             input_answer: null,
             option_id: e.target.value,
@@ -79,16 +80,17 @@ export const ScoreSheet = () => {
 
     return (
         <>
-            {/* {console.log(currentAnswerList)} */}
             <form>
                 <h2>Answer Form</h2>
                 <fieldset>
                     {
                         questions.map(question => {
+                            let currentAnswer = currentAnswerList.find(answer => answer.question_id === question.id)
+                            console.log('currentAnswer: ', currentAnswer);
                             if (question.type === 'select') {
                                 return <div className="form-group">
                                     <label >{question.text}</label>
-                                    <select id={question.id} required autoFocus className="form-control"
+                                    <select id={question.id} value={currentAnswer?.option_id} required autoFocus className="form-control"
                                         onChange={handleOptionChange}>
                                         <option key="0" value="0">Please choose an option... </option>
                                         {question.options_set?.map(option => {
@@ -100,7 +102,7 @@ export const ScoreSheet = () => {
                                 return <div className="form-group">
                                     <label >{question.text}</label>
                                     {question.options_set?.map(option => {
-                                        return <> <input name={"question" + question.id} type="radio" id={question.id} value={option.id} required className="form-control"
+                                        return <> <input name={"question" + question.id} type="radio" id={question.id} value={option.id} checked={currentAnswer?.option_id === option.id} required className="form-control"
                                             onChange={handleOptionChange}
                                         />
                                             <label id={question.id} >{option.text}</label> </>
@@ -109,7 +111,7 @@ export const ScoreSheet = () => {
                             } else if (question.type === 'input') {
                                 return <div className="form-group">
                                     <label >{question.text}</label>
-                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id} required className="form-control"
+                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id} value={currentAnswer?.input_answer} required className="form-control"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -123,6 +125,7 @@ export const ScoreSheet = () => {
                         // Prevent form from being submitted
                         evt.preventDefault()
                         // Send POST request to your API
+                        // if currentAnswerList
                         createAnswer(currentAnswerList)
                             .then(() => history.push("/"))
                     }

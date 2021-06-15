@@ -13,7 +13,7 @@ export const AnswerProvider = (props) => {
             }
         })
             .then(response => response.json())
-            .then(setAnswers)
+            // .then(setAnswers)
     }
 
     const getAnswerTypes = () => {
