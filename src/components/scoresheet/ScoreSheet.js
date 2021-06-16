@@ -8,7 +8,7 @@ export const ScoreSheet = () => {
     const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
-    console.log('currentAnswerList: ', currentAnswerList);
+    // console.log('currentAnswerList: ', currentAnswerList);
 
     useEffect(() => {
         getQuestions()
@@ -57,7 +57,7 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        // debugger
+        // console.log(currentAnswerList)
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
@@ -67,11 +67,9 @@ export const ScoreSheet = () => {
         let arrayChanged = false
         newAnswerList.forEach(answer => {
             if (answer.question_id && parseInt(answer.question_id) === parseInt(newAnswer.question_id)) {
-                // debugger
                 if (answer.id) {
                     newAnswer.id = answer.id
                 }
-                // console.log(newAnswer)
                 arrayChanged = true
                 let answerIndex = newAnswerList.indexOf(answer)
                 newAnswerList.splice(answerIndex, 1, newAnswer)
@@ -88,7 +86,6 @@ export const ScoreSheet = () => {
         <>
             <form>
                 <h2>Answer Form</h2>
-                {/* {console.log("render", currentAnswerList.find(answer => parseInt(answer.question_id) === 2))} */}
                 <fieldset>
                     {
                         questions.map(question => {
@@ -119,7 +116,8 @@ export const ScoreSheet = () => {
                             } else if (question.type === 'input') {
                                 return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
-                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id} value={currentAnswer()?.input_answer} required className="form-control"
+                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id}
+                                        value={currentAnswer()?.input_answer} required className="form-control"
                                         onChange={handleInputChange}
                                     />
                                 </div>
@@ -132,13 +130,18 @@ export const ScoreSheet = () => {
                     onClick={evt => {
                         // Prevent form from being submitted
                         evt.preventDefault()
-                        // Send POST request to your API
-                        // if currentAnswerList
-                        createAnswer(currentAnswerList)
-                            .then(() => history.push("/"))
+                        if (currentAnswerList[0].id) {
+                            // console.log('currentAnswerList: ', currentAnswerList);
+                            editAnswer(currentAnswerList)
+                                .then(() => history.push("/"))
+                        } else {
+                            // Send POST request to your API
+                            createAnswer(currentAnswerList)
+                                .then(() => history.push("/answers"))
+                        }
                     }
                     }
-                    className="btn btn-primary">Submit All Answers</button>
+                    className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>
             </form >
         </>
     )
