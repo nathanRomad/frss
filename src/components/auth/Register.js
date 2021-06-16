@@ -34,7 +34,7 @@ export const Register = (props) => {
                 .then(res => {
                     if ("token" in res) {
                         localStorage.setItem("frss_token", res.token)
-                        props.history.push("/")
+                        props.history.push("/scoresheet")
                     }
                 })
         } else {

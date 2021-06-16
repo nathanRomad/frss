@@ -8,16 +8,13 @@ export const ScoreSheet = () => {
     const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
-    // console.log('currentAnswerList: ', currentAnswerList);
 
     useEffect(() => {
         getQuestions()
             .then(() => getAnswers())
             .then((answers) => {
-                // console.log('answers: ', answers);
                 let newAnswerList = []
                 answers.forEach(answer => {
-                    // console.log('answer: ', answer);
                     let newAnswer = {
                         id: answer.id,
                         input_answer: answer.input_answer,
@@ -31,7 +28,6 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
-        // console.log(currentAnswerList)
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -57,7 +53,6 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        // console.log(currentAnswerList)
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
@@ -94,7 +89,7 @@ export const ScoreSheet = () => {
                             if (question.type === 'select') {
                                 return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
-                                    <select id={question.id} value={currentAnswer()?.option_id} required autoFocus className="form-control"
+                                    <select id={question.id} value={currentAnswer()?.option_id} required className="form-control"
                                         onChange={handleOptionChange}>
                                         <option key="0" value="0">Please choose an option... </option>
                                         {question.options_set?.map(option => {
@@ -122,7 +117,6 @@ export const ScoreSheet = () => {
                                     />
                                 </div>
                             }
-                            // return <label> {question.text} </label>
                         })
                     }
                 </fieldset>
@@ -131,11 +125,11 @@ export const ScoreSheet = () => {
                         // Prevent form from being submitted
                         evt.preventDefault()
                         if (currentAnswerList[0].id) {
-                            // console.log('currentAnswerList: ', currentAnswerList);
+                            // Send PUT request to API
                             editAnswer(currentAnswerList)
                                 .then(() => history.push("/"))
                         } else {
-                            // Send POST request to your API
+                            // Send POST request to API
                             createAnswer(currentAnswerList)
                                 .then(() => history.push("/answers"))
                         }
