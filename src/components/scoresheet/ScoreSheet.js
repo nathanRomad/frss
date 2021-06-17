@@ -18,8 +18,8 @@ export const ScoreSheet = () => {
                     let newAnswer = {
                         id: answer.id,
                         input_answer: answer.input_answer,
-                        option_id: answer.option_id?.id,
-                        question_id: answer.question_id.id
+                        option_id: answer.option?.id,
+                        question_id: answer.question.id
                     }
                     newAnswerList.push(newAnswer)
                 })
@@ -28,6 +28,7 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
+        console.log(currentAnswerList)
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -53,6 +54,7 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
+        console.log(currentAnswerList)
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),

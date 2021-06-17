@@ -13,7 +13,6 @@ export const AnswerProvider = (props) => {
             }
         })
             .then(response => response.json())
-            // .then(setAnswers)
     }
     
     const getSummary = () => {
@@ -67,7 +66,7 @@ export const AnswerProvider = (props) => {
     }
 
     return (
-        <AnswerContext.Provider value={{ answers, answerTypes, getAnswers, getAnswerTypes, createAnswer, editAnswer, getAnswerById }} >
+        <AnswerContext.Provider value={{ answers, answerTypes, getAnswers, getAnswerTypes, createAnswer, editAnswer, getAnswerById, getSummary }} >
             { props.children}
         </AnswerContext.Provider>
     )
