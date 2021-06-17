@@ -2,12 +2,19 @@ import React, { useContext, useState, useEffect } from "react"
 import { useHistory, useParams } from 'react-router-dom'
 import { AnswerContext } from "./AnswerProvider"
 import { QuestionContext } from "./QuestionProvider"
+import { Modal, Button } from "react-bootstrap";
 
 export const ScoreSheet = () => {
     const history = useHistory()
     const { createAnswer, editAnswer, getAnswers } = useContext(AnswerContext)
     const { questions, getQuestions } = useContext(QuestionContext)
     const [currentAnswerList, setCurrentAnswerList] = useState([])
+    const [questionExplanation, setQuestionExplanation] = useState("")
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     useEffect(() => {
         getQuestions()
@@ -28,7 +35,6 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
-        console.log(currentAnswerList)
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -54,7 +60,6 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        console.log(currentAnswerList)
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
@@ -87,10 +92,15 @@ export const ScoreSheet = () => {
                     {
                         questions.map(question => {
                             let currentAnswer = () => currentAnswerList.find(answer => answer.question_id === question.id)
-                            // console.log('currentAnswer: ', currentAnswer());
                             if (question.type === 'select') {
                                 return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
+                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                        e.preventDefault()
+                                        handleShow()
+                                        setQuestionExplanation(question.explanation)
+                                    }}>Details</Button> : <></>
+                                    }
                                     <select id={question.id} value={currentAnswer()?.option_id} required className="form-control"
                                         onChange={handleOptionChange}>
                                         <option key="0" value="0">Please choose an option... </option>
@@ -102,6 +112,12 @@ export const ScoreSheet = () => {
                             } else if (question.type === 'radio') {
                                 return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
+                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                        e.preventDefault()
+                                        handleShow()
+                                        setQuestionExplanation(question.explanation)
+                                    }}>Details</Button> : <></>
+                                    }
                                     {question.options_set?.map(option => {
                                         return <> <input name={"question" + question.id} type="radio" id={question.id} key={option.id}
                                             value={option.id} checked={parseInt(currentAnswer()?.option_id) === parseInt(option.id)} required className="form-control"
@@ -113,6 +129,12 @@ export const ScoreSheet = () => {
                             } else if (question.type === 'input') {
                                 return <div className="form-group" key={question.id}>
                                     <label >{question.text}</label>
+                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                        e.preventDefault()
+                                        handleShow()
+                                        setQuestionExplanation(question.explanation)
+                                    }}>Details</Button> : <></>
+                                    }
                                     <input type="number" min="1" max="10,000,000" step="100.00" id={question.id}
                                         value={currentAnswer()?.input_answer} required className="form-control"
                                         onChange={handleInputChange}
@@ -139,6 +161,14 @@ export const ScoreSheet = () => {
                     }
                     className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>
             </form >
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>{questionExplanation}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
