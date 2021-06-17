@@ -1,6 +1,7 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { AnswerProvider } from "./scoresheet/AnswerProvider"
+import { QuestionProvider } from "./scoresheet/QuestionProvider"
 import { ScoreSheet } from "./scoresheet/ScoreSheet"
 
 export const ApplicationViews = () => {
@@ -10,9 +11,11 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
             <AnswerProvider>
-                <Route exact path="/scoresheet">
-                    <ScoreSheet />
-                </Route>
+                <QuestionProvider>
+                    <Route exact path="/scoresheet">
+                        <ScoreSheet />
+                    </Route>
+                </QuestionProvider>
             </AnswerProvider>
         </main>
     </>

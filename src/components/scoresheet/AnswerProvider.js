@@ -13,7 +13,16 @@ export const AnswerProvider = (props) => {
             }
         })
             .then(response => response.json())
-            .then(setAnswers)
+            // .then(setAnswers)
+    }
+    
+    const getSummary = () => {
+        return fetch("http://localhost:8000/summary", {
+            headers: {
+                "Authorization": `Token ${localStorage.getItem("frss_token")}`
+            }
+        })
+            .then(response => response.json())
     }
 
     const getAnswerTypes = () => {
