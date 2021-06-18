@@ -7,7 +7,7 @@ export const QuestionProvider = (props) => {
     const [questionTypes, setTypes] = useState([])
 
     const getQuestions = () => {
-        return fetch("http://localhost:8000/questions", {
+        return fetch("https://financialreadinessscoresheet.herokuapp.com/questions", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -17,7 +17,7 @@ export const QuestionProvider = (props) => {
     }
 
     const getQuestionTypes = () => {
-        return fetch("http://localhost:8000/questiontypes", {
+        return fetch("https://financialreadinessscoresheet.herokuapp.com/questiontypes", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -27,7 +27,7 @@ export const QuestionProvider = (props) => {
     }
 
     const getQuestionById = (id) => {
-        return fetch(`http://localhost:8000/questions/${id}`, {
+        return fetch(`https://financialreadinessscoresheet.herokuapp.com/questions/${id}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -36,7 +36,7 @@ export const QuestionProvider = (props) => {
     }
 
     const createQuestion = (question) => {
-        return fetch("http://localhost:8000/questions", {
+        return fetch("https://financialreadinessscoresheet.herokuapp.com/questions", {
             method: "POST",
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`,
@@ -47,7 +47,7 @@ export const QuestionProvider = (props) => {
     }
 
     const editQuestion = (question) => {
-        return fetch(`http://localhost:8000/questions/${question.id}`, {
+        return fetch(`https://financialreadinessscoresheet.herokuapp.com/questions/${question.id}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`,

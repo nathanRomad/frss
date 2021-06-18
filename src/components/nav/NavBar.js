@@ -28,5 +28,6 @@ export const NavBar = (props) => {
                         </li>
                     </>
             }        </ul>
+            
     )
 }
