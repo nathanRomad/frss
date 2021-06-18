@@ -4,7 +4,6 @@ import { AnswerContext } from "./AnswerProvider"
 export const Summary = (props) => {
     const { getSummary } = useContext(AnswerContext)
     const [summary, setSummary] = useState({})
-    console.log('summary: ', summary);
 
     useEffect(() => {
         getSummary()

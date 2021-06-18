@@ -35,7 +35,6 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
-        // console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -61,7 +60,6 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        // console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
