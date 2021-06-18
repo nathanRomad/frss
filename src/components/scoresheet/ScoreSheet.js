@@ -11,10 +11,10 @@ export const ScoreSheet = () => {
     const [currentAnswerList, setCurrentAnswerList] = useState([])
     const [questionExplanation, setQuestionExplanation] = useState("")
 
+    // Handle Modal
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
 
     useEffect(() => {
         getQuestions()
@@ -35,7 +35,6 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
-        console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -61,7 +60,6 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
-        console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
@@ -86,89 +84,89 @@ export const ScoreSheet = () => {
         }
     }
 
-    return (
-        <>
-            <form>
-                <h2>Answer Form</h2>
-                <fieldset>
-                    {
-                        questions.map(question => {
-                            let currentAnswer = () => currentAnswerList.find(answer => answer.question_id === question.id)
-                            if (question.type === 'select') {
-                                return <div className="form-group" key={question.id}>
-                                    <label >{question.text}</label>
-                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
-                                        e.preventDefault()
-                                        handleShow()
-                                        setQuestionExplanation(question.explanation)
-                                    }}>Details</Button> : <></>
-                                    }
-                                    <select id={question.id} value={currentAnswer()?.option_id} required className="form-control"
-                                        onChange={handleOptionChange}>
-                                        <option key="0" value="0">Please choose an option... </option>
+        return (
+            <>
+                <form>
+                    <h2>Answer Form</h2>
+                    <fieldset>
+                        {
+                            questions.map(question => {
+                                let currentAnswer = () => currentAnswerList.find(answer => answer.question_id === question.id)
+                                if (question.type === 'select') {
+                                    return <div className="form-group" key={question.id}>
+                                        <label >{question.text}</label>
+                                        {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                            e.preventDefault()
+                                            handleShow()
+                                            setQuestionExplanation(question.explanation)
+                                        }}>Details</Button> : <></>
+                                        }
+                                        <select id={question.id} value={currentAnswer()?.option_id} required className="form-control"
+                                            onChange={handleOptionChange}>
+                                            <option key="0" value="0">Please choose an option... </option>
+                                            {question.options_set?.map(option => {
+                                                return <option key={option.id} value={option.id}>{option.text} </option>
+                                            })}
+                                        </select>
+                                    </div>
+                                } else if (question.type === 'radio') {
+                                    return <div className="form-group" key={question.id}>
+                                        <label >{question.text}</label>
+                                        {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                            e.preventDefault()
+                                            handleShow()
+                                            setQuestionExplanation(question.explanation)
+                                        }}>Details</Button> : <></>
+                                        }
                                         {question.options_set?.map(option => {
-                                            return <option key={option.id} value={option.id}>{option.text} </option>
+                                            return <> <input name={"question" + question.id} type="radio" id={question.id} key={option.id}
+                                                value={option.id} checked={parseInt(currentAnswer()?.option_id) === parseInt(option.id)} required className="form-control"
+                                                onChange={handleOptionChange}
+                                            />
+                                                <label id={question.id} >{option.text}</label> </>
                                         })}
-                                    </select>
-                                </div>
-                            } else if (question.type === 'radio') {
-                                return <div className="form-group" key={question.id}>
-                                    <label >{question.text}</label>
-                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
-                                        e.preventDefault()
-                                        handleShow()
-                                        setQuestionExplanation(question.explanation)
-                                    }}>Details</Button> : <></>
-                                    }
-                                    {question.options_set?.map(option => {
-                                        return <> <input name={"question" + question.id} type="radio" id={question.id} key={option.id}
-                                            value={option.id} checked={parseInt(currentAnswer()?.option_id) === parseInt(option.id)} required className="form-control"
-                                            onChange={handleOptionChange}
+                                    </div>
+                                } else if (question.type === 'input') {
+                                    return <div className="form-group" key={question.id}>
+                                        <label >{question.text}</label>
+                                        {question.explanation ? <Button variant="primary" onClick={(e) => {
+                                            e.preventDefault()
+                                            handleShow()
+                                            setQuestionExplanation(question.explanation)
+                                        }}>Details</Button> : <></>
+                                        }
+                                        <input type="number" min="1" max="10,000,000" step="100.00" id={question.id}
+                                            value={currentAnswer()?.input_answer} required className="form-control"
+                                            onChange={handleInputChange}
                                         />
-                                            <label id={question.id} >{option.text}</label> </>
-                                    })}
-                                </div>
-                            } else if (question.type === 'input') {
-                                return <div className="form-group" key={question.id}>
-                                    <label >{question.text}</label>
-                                    {question.explanation ? <Button variant="primary" onClick={(e) => {
-                                        e.preventDefault()
-                                        handleShow()
-                                        setQuestionExplanation(question.explanation)
-                                    }}>Details</Button> : <></>
-                                    }
-                                    <input type="number" min="1" max="10,000,000" step="100.00" id={question.id}
-                                        value={currentAnswer()?.input_answer} required className="form-control"
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                            }
-                        })
-                    }
-                </fieldset>
-                <button type="submit"
-                    onClick={evt => {
-                        // Prevent form from being submitted
-                        evt.preventDefault()
-                        if (currentAnswerList[0].id) {
-                            // Send PUT request to API
-                            editAnswer(currentAnswerList)
-                                .then(() => history.push("/"))
-                        } else {
-                            // Send POST request to API
-                            createAnswer(currentAnswerList)
-                                .then(() => history.push("/answers"))
+                                    </div>
+                                }
+                            })
                         }
-                    }
-                    }
-                    className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>
-            </form >
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Body>{questionExplanation}</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                </Modal.Footer>
-            </Modal>
-        </>
-    )
-}
+                    </fieldset>
+                    <button type="submit"
+                        onClick={evt => {
+                            // Prevent form from being submitted
+                            evt.preventDefault()
+                            if (currentAnswerList[0].id) {
+                                // Send PUT request to API
+                                editAnswer(currentAnswerList)
+                                    .then(() => history.push("/"))
+                            } else {
+                                // Send POST request to API
+                                createAnswer(currentAnswerList)
+                                    .then(() => history.push("/answers"))
+                            }
+                        }
+                        }
+                        className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>
+                </form >
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Body>{questionExplanation}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        )
+    }

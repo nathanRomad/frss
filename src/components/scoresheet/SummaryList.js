@@ -1,12 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AnswerContext } from "./AnswerProvider"
 
-
 export const Summary = (props) => {
-
     const { getSummary } = useContext(AnswerContext)
     const [summary, setSummary] = useState({})
-    console.log('summary: ', summary);
 
     useEffect(() => {
         getSummary()
@@ -22,25 +19,21 @@ export const Summary = (props) => {
             <div>Monthly Income: {summary.budgetAndProtection?.monthlyIncome}</div>
             <div>Total Liabilities: {summary.budgetAndProtection?.totalLiabilities}</div>
             <div>Total Annual Income: {summary.budgetAndProtection?.totalAnnualIncome}</div>
-            <div>Ratio of Living Expenses: {summary.budgetAndProtection?.ratioOfLivingExpenses}</div><br></br>
+            <div>Ratio of Living Expenses: {summary.budgetAndProtection?.ratioOfLivingExpenses}</div>
+            <br></br>
             <h2>Security & Legal</h2>
-            {/* <div>Life Insurance: {summary.}</div>
-            <div>Renters Insurance: {summary.}</div>
-            <div>Disability Insurance: {summary.}</div>
-            <div>Vehicle Insurance: {summary.}</div>
-            <div>Healthcare Directive: {summary.}</div> */}
+            <div>Life Insurance: {summary.securityAndLegal?.lifeInsurance}</div>
+            <div>Renters Insurance: {summary.securityAndLegal?.rentersInsurance}</div>
+            <div>Disability Insurance: {summary.securityAndLegal?.disabilityInsurance}</div>
+            <div>Vehicle Insurance: {summary.securityAndLegal?.vehicleInsurance}</div>
+            <div>Healthcare Directive: {summary.securityAndLegal?.healthCareDirective}</div>
             <br></br>
             <h2>Retirement Contributions & Retirement Savings</h2>
-            {/* <div>Life Insurance: {summary.}</div>
-            <div>Renters Insurance: {summary.}</div>
-            <div>Disability Insurance: {summary.}</div>
-            <div>Vehicle Insurance: {summary.}</div>
-            <div>Healthcare Directive: {summary.}</div> */}
+            <div>Monthly Retirement Contributions: {summary.retirement?.monthlyRetirementContributions}</div>
+            <div>Total Retirement Contributions: {summary.retirement?.retirementSavings}</div>
             <br></br>
-
             <h2>Score</h2>
-            {/* <div>FRS: {summary.financialReadinessScore}/100</div> */}
-
+            <div>FRS: {summary.score?.financialReadinessScore}/100</div>
         </>
     )
 }
