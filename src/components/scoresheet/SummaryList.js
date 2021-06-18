@@ -6,6 +6,7 @@ export const Summary = (props) => {
 
     const { getSummary } = useContext(AnswerContext)
     const [summary, setSummary] = useState({})
+    console.log('summary: ', summary);
 
     useEffect(() => {
         getSummary()
@@ -18,10 +19,10 @@ export const Summary = (props) => {
         <>
             <h1>Summary</h1>
             <h2>Budget & Protection</h2>
-            <div>Monthly Income: {summary.monthlyIncome}</div>
-            <div>Total Liabilities: {summary.totalLiabilities}</div>
-            <div>Total Annual Income: {summary.totalAnnualIncome}</div>
-            <div>Ratio of Living Expenses: {summary.ratioOfLivingExpenses}</div><br></br>
+            <div>Monthly Income: {summary.budgetAndProtection?.monthlyIncome}</div>
+            <div>Total Liabilities: {summary.budgetAndProtection?.totalLiabilities}</div>
+            <div>Total Annual Income: {summary.budgetAndProtection?.totalAnnualIncome}</div>
+            <div>Ratio of Living Expenses: {summary.budgetAndProtection?.ratioOfLivingExpenses}</div><br></br>
             <h2>Security & Legal</h2>
             {/* <div>Life Insurance: {summary.}</div>
             <div>Renters Insurance: {summary.}</div>
@@ -38,7 +39,7 @@ export const Summary = (props) => {
             <br></br>
 
             <h2>Score</h2>
-            <div>FRS: {summary.financialReadinessScore}/100</div>
+            {/* <div>FRS: {summary.financialReadinessScore}/100</div> */}
 
         </>
     )

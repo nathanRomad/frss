@@ -35,6 +35,7 @@ export const ScoreSheet = () => {
     }, [])
 
     const handleInputChange = e => {
+        console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: e.target.value,
             option_id: null,
@@ -60,6 +61,7 @@ export const ScoreSheet = () => {
     }
 
     const handleOptionChange = e => {
+        console.log('currentAnswerList: ', currentAnswerList);
         let newAnswer = {
             input_answer: null,
             option_id: parseInt(e.target.value),
@@ -162,8 +164,6 @@ export const ScoreSheet = () => {
                     className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>
             </form >
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                </Modal.Header>
                 <Modal.Body>{questionExplanation}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
