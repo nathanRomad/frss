@@ -90,7 +90,7 @@ export const ScoreSheet = () => {
         if (question.type === 'select') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="primary" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -107,7 +107,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'radio') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="primary" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -124,7 +124,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'input') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="primary" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -160,9 +160,9 @@ export const ScoreSheet = () => {
                     {currentPage === 1 && newQuestions.slice(11, 20)}
                     {currentPage === 2 && newQuestions.slice(21, 29)}
                 </fieldset>
-                {currentPage !== 0 && <button onClick={goBack}>go back</button>}
-                {currentPage !== 2 && <button onClick={goForward}>go forward</button>}
-                {currentPage === 2 && <button type="submit"
+                {currentPage !== 0 && <Button variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
+                {currentPage !== 2 && <Button variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}
+                {currentPage === 2 && <Button className="submitButton" type="submit"
                     onClick={evt => {
                         // Prevent form from being submitted
                         evt.preventDefault()
@@ -177,7 +177,7 @@ export const ScoreSheet = () => {
                         }
                     }
                     }
-                    className="btn btn-primary">{currentAnswerList[0]?.id ? "Edit Answers" : "Submit Answers"}</button>}
+                     variant="outline-primary" >{currentAnswerList[0]?.id ? "Submit Update" : "Submit Answers"}</Button>}
 
 
             </form >

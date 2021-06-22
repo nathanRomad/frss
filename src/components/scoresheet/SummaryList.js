@@ -1,16 +1,23 @@
 import React, { useContext, useEffect, useState } from "react"
-import { AnswerContext } from "./AnswerProvider"
+import { AnalyticsContext } from "./AnalyticsProvider"
+import { MyResponsivePie } from "./ScorePie"
 
 export const Summary = (props) => {
-    const { getSummary } = useContext(AnswerContext)
+    const { getSummary } = useContext(AnalyticsContext)
     const [summary, setSummary] = useState({})
+    const [data, setData] = useState([])
 
     useEffect(() => {
         getSummary()
-        .then((res) => {
-            setSummary(res)
-        })
+            .then((res) => {
+                setSummary(res)
+            })
     }, [])
+
+    useEffect(() => {
+        setData(summary.data)
+    }, [summary])
+    
 
     return (
         <>
@@ -34,6 +41,8 @@ export const Summary = (props) => {
             <br></br>
             <h2>Score</h2>
             <div>FRS: {summary.score?.financialReadinessScore}/100</div>
+            {summary.data?
+            <div style={{width: 450, height: 450 }}> <MyResponsivePie data={data}/> </div> : <></>}
         </>
     )
 }

@@ -14,15 +14,6 @@ export const AnswerProvider = (props) => {
         })
             .then(response => response.json())
     }
-    
-    const getSummary = () => {
-        return fetch("http://localhost:8000/summary", {
-            headers: {
-                "Authorization": `Token ${localStorage.getItem("frss_token")}`
-            }
-        })
-            .then(response => response.json())
-    }
 
     const getAnswerTypes = () => {
         return fetch("http://localhost:8000/answertypes", {
@@ -66,7 +57,7 @@ export const AnswerProvider = (props) => {
     }
 
     return (
-        <AnswerContext.Provider value={{ answers, answerTypes, getAnswers, getAnswerTypes, createAnswer, editAnswer, getAnswerById, getSummary }} >
+        <AnswerContext.Provider value={{ answers, answerTypes, getAnswers, getAnswerTypes, createAnswer, editAnswer, getAnswerById }} >
             { props.children}
         </AnswerContext.Provider>
     )
