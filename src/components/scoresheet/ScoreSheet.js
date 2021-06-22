@@ -90,7 +90,7 @@ export const ScoreSheet = () => {
         if (question.type === 'select') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -107,7 +107,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'radio') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -124,7 +124,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'input') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-info" onClick={(e) => {
+                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
