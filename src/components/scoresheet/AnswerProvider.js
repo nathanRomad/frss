@@ -7,7 +7,7 @@ export const AnswerProvider = (props) => {
     const [answerTypes, setTypes] = useState([])
 
     const getAnswers = () => {
-        return fetch("https://financialreadinessscoresheet.herokuapp.com/answers", {
+        return fetch("http://localhost:8000/answers", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -16,7 +16,7 @@ export const AnswerProvider = (props) => {
     }
     
     const getSummary = () => {
-        return fetch("https://financialreadinessscoresheet.herokuapp.com/summary", {
+        return fetch("http://localhost:8000/summary", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -25,7 +25,7 @@ export const AnswerProvider = (props) => {
     }
 
     const getAnswerTypes = () => {
-        return fetch("https://financialreadinessscoresheet.herokuapp.com/answertypes", {
+        return fetch("http://localhost:8000/answertypes", {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -35,7 +35,7 @@ export const AnswerProvider = (props) => {
     }
 
     const getAnswerById = (id) => {
-        return fetch(`https://financialreadinessscoresheet.herokuapp.com/answers/${id}`, {
+        return fetch(`http://localhost:8000/answers/${id}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`
             }
@@ -44,7 +44,7 @@ export const AnswerProvider = (props) => {
     }
 
     const createAnswer = (answer) => {
-        return fetch("https://financialreadinessscoresheet.herokuapp.com/answers", {
+        return fetch("http://localhost:8000/answers", {
             method: "POST",
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`,
@@ -55,7 +55,7 @@ export const AnswerProvider = (props) => {
     }
 
     const editAnswer = (answer) => {
-        return fetch(`https://financialreadinessscoresheet.herokuapp.com/answers/${answer.id}`, {
+        return fetch(`http://localhost:8000/answers/${answer.id}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Token ${localStorage.getItem("frss_token")}`,

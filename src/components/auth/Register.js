@@ -22,7 +22,7 @@ export const Register = (props) => {
                 "password": password.current.value
             }
 
-            return fetch("https://financialreadinessscoresheet.herokuapp.com/register", {
+            return fetch("http://localhost:8000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
