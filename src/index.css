@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.goBackButton {
+  transition-duration: 0.4s;
+}
+
+.goBackButton:hover {
+  color: white;
+}
+
+.goForwardButton {
+  transition-duration: 0.4s;
+}
