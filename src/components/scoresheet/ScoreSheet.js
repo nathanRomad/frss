@@ -90,7 +90,7 @@ export const ScoreSheet = () => {
         if (question.type === 'select') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
+                {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -107,7 +107,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'radio') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
+                {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -124,7 +124,7 @@ export const ScoreSheet = () => {
         } else if (question.type === 'input') {
             return <div className="form-group" key={question.id}>
                 <label >{question.text}</label>
-                {question.explanation ? <Button variant="outline-dark" onClick={(e) => {
+                {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
                     handleShow()
                     setQuestionExplanation(question.explanation)
@@ -157,8 +157,8 @@ export const ScoreSheet = () => {
                 <h2>Answer Form</h2>
                 <fieldset>
                     {currentPage === 0 && newQuestions.slice(0, 10)}
-                    {currentPage === 1 && newQuestions.slice(11, 20)}
-                    {currentPage === 2 && newQuestions.slice(21, 29)}
+                    {currentPage === 1 && newQuestions.slice(10, 20)}
+                    {currentPage === 2 && newQuestions.slice(20, 29)}
                 </fieldset>
                 {currentPage !== 0 && <Button variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
                 {currentPage !== 2 && <Button variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}

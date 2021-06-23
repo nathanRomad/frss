@@ -6,7 +6,7 @@ export const Analytics = (props) => {
     const { getSummary, getAnalytics } = useContext(AnalyticsContext)
     const [summary, setSummary] = useState({})
     const [analytics, setAnalytics] = useState({})
-    const [data, setData] = useState([])
+    const [retirementData, setRetirementData] = useState([])
     
     useEffect(() => {
         getSummary()
@@ -23,17 +23,17 @@ export const Analytics = (props) => {
     }, [])
     
     useEffect(() => {
-        setData(analytics.data)
+        setRetirementData(analytics.retirementData)
     }, [analytics])
     
 
     return (
         <>
             <h1>Analytics</h1>
-            <h2>Analysis One</h2>
+            <h2>Retirement</h2>
             <div>Total Liabilities: {analytics.detailedAnalysisOne?.totalLiabilities}</div>
             <div>Retirement Savings: {analytics.detailedAnalysisOne?.retirementSavings}</div>
-            <div style={{width: 450, height: 450 }}> {data?.length ? <MyResponsiveBar data={data}/>: <></>}</div>
+            <div style={{width: 450, height: 450 }}> {retirementData?.length ? <MyResponsiveBar data={retirementData}/>: <></>}</div>
             <br></br>
      </>
     )

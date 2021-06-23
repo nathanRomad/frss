@@ -7,8 +7,8 @@ import { ResponsiveBar } from '@nivo/bar'
 export const MyResponsiveBar = ({ data /* see data tab */ }) => (
     <ResponsiveBar
         data={data}
-        keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-        indexBy="country"
+        keys={[ 'traditional IRA', 'Roth IRA', 'Mutual Fund', '401k', 'Stocks/Bonds', 'Other' ]}
+        indexBy="Financial Contributions"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         valueScale={{ type: 'linear' }}
@@ -55,7 +55,7 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'country',
+            legend: 'Financial Contributions',
             legendPosition: 'middle',
             legendOffset: 32
         }}
@@ -63,7 +63,7 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'food',
+            legend: 'Retirment Savings',
             legendPosition: 'middle',
             legendOffset: -40
         }}
