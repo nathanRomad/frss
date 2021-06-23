@@ -160,9 +160,9 @@ export const ScoreSheet = () => {
                     {currentPage === 1 && newQuestions.slice(10, 20)}
                     {currentPage === 2 && newQuestions.slice(20, 29)}
                 </fieldset>
-                {currentPage !== 0 && <Button variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
-                {currentPage !== 2 && <Button variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}
-                {currentPage === 2 && <Button className="submitButton" type="submit"
+                {currentPage !== 0 && <Button key="goBack" variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
+                {currentPage !== 2 && <Button key="goForward" variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}
+                {currentPage === 2 && <Button key="submit" className="submitButton" type="submit"
                     onClick={evt => {
                         // Prevent form from being submitted
                         evt.preventDefault()

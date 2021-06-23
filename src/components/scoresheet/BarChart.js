@@ -14,40 +14,7 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
         colors={{ scheme: 'nivo' }}
-        defs={[
-            {
-                id: 'dots',
-                type: 'patternDots',
-                background: 'inherit',
-                color: '#38bcb2',
-                size: 4,
-                padding: 1,
-                stagger: true
-            },
-            {
-                id: 'lines',
-                type: 'patternLines',
-                background: 'inherit',
-                color: '#eed312',
-                rotation: -45,
-                lineWidth: 6,
-                spacing: 10
-            }
-        ]}
-        fill={[
-            {
-                match: {
-                    id: 'fries'
-                },
-                id: 'dots'
-            },
-            {
-                match: {
-                    id: 'sandwich'
-                },
-                id: 'lines'
-            }
-        ]}
+
         borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
         axisTop={null}
         axisRight={null}
@@ -65,10 +32,10 @@ export const MyResponsiveBar = ({ data /* see data tab */ }) => (
             tickRotation: 0,
             legend: 'Retirment Savings',
             legendPosition: 'middle',
-            legendOffset: -40
+            legendOffset: -55
         }}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
+        labelSkipWidth={15}
+        labelSkipHeight={15}
         labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
         legends={[
             {
