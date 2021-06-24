@@ -14,7 +14,7 @@ export const NavBar = (props) => {
             {
                 (localStorage.getItem("frss_token") !== null) ?
                     <li className="nav-item">
-                        <button className="nav-link fakeLink"
+                        <button className="nav-link"
                             onClick={() => {
                                 localStorage.removeItem("frss_token")
                                 props.history.push({ pathname: "/" })

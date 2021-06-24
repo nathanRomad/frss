@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: whitesmoke;
 }
 
 code {
@@ -15,11 +16,57 @@ code {
 .goBackButton {
   transition-duration: 0.4s;
 }
-
 .goBackButton:hover {
   color: white;
 }
 
 .goForwardButton {
   transition-duration: 0.4s;
+}
+
+.submit {
+  float: right;
+}
+
+.flex {
+  display: flex
+}
+
+.column {
+  flex-direction: column;
+}
+#scoresheet {
+  border: 2px black solid;
+  padding: 15px;
+  /* background-color: whitesmoke; */
+}
+
+#summaryTitle {
+  margin: 5px;
+  padding: 5px
+}
+#summary {
+  margin: 5px;
+  padding: 5px
+}
+
+#score{
+  margin: 0, 15px;
+  padding: 5px
+}
+
+.form-width{
+  width: max-content;
+}
+
+.container-left {
+  width: 20%;
+}
+
+.container-right {
+  width: 20%;
+}
+
+.analytics {
+  margin: 0, 35px;
 }
