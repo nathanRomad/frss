@@ -8,11 +8,11 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <Router>
       <FRSS />
     </Router>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 
