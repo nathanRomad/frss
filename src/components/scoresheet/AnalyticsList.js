@@ -21,21 +21,15 @@ export const Analytics = (props) => {
                 setAnalytics(res)
             })
     }, [])
-
-    // useEffect(() => {
-    //     setData(summary.data)
-    // }, [summary])
     
 
     return (
         <>
             <h1>Analytics</h1>
-            {/* <h2>Analysis One</h2>
-            <div>something: {analytics.something?.analysis}</div>
+            <h2>Analysis One</h2>
+            <div>Total Liabilities: {analytics.detailedAnalysisOne?.totalLiabilities}</div>
+            <div>Retirement Savings: {analytics.detailedAnalysisOne?.retirementSavings}</div>
             <br></br>
-            <h2>Analysis Two</h2>
-            <div>something else: {analytics.somethingElse?.analysis}</div>
-            <br></br> */}
         </>
     )
 }
