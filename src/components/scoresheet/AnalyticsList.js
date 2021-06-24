@@ -9,21 +9,21 @@ export const Analytics = (props) => {
     const [analytics, setAnalytics] = useState({})
     const [retirementData, setRetirementData] = useState([])
     const [lineData, setLineData] = useState([])
-    
+
     useEffect(() => {
         getSummary()
-        .then((res) => {
-            setSummary(res)
-        })
+            .then((res) => {
+                setSummary(res)
+            })
     }, [])
-    
+
     useEffect(() => {
         getAnalytics()
-        .then((res) => {
-            setAnalytics(res)
-        })
+            .then((res) => {
+                setAnalytics(res)
+            })
     }, [])
-    
+
     useEffect(() => {
         setRetirementData(analytics.retirementData)
     }, [analytics])
@@ -31,20 +31,24 @@ export const Analytics = (props) => {
     useEffect(() => {
         setLineData(analytics.lineData)
     }, [analytics])
-    
+
 
     return (
         <>
-            <h1>Analytics</h1>
-            <h2>Retirement</h2>
-            <div>Retirement Expectation: {analytics.retirementAnalysis?.retirementExpectation}</div>
-            <div>Retirement Savings: {analytics.retirementAnalysis?.retirementSavings}</div>
-            <div style={{width: 450, height: 450 }}> {retirementData?.length ? <MyResponsiveBar data={retirementData}/>: <></>}</div>
-            <h2>Monthly Budget</h2>
-            <div>Monthly Income: {analytics.incomeAnalysis?.monthlyIncome}</div>
-            <div>Total Monthly Bills: {analytics.incomeAnalysis?.totalMonthlyBills}</div>
-            <div style={{width: 750, height: 550 }}> {lineData?.length ? <MyResponsiveLine data={lineData}/>: <></>}</div>
-            <br></br>
-     </>
+            <div className="flex">
+                <div className="analytics">
+                    <h1>Analytics</h1>
+                    <h2>Retirement</h2>
+                    <div>Retirement Expectation: {analytics.retirementAnalysis?.retirementExpectation}</div>
+                    <div>Retirement Savings: {analytics.retirementAnalysis?.retirementSavings}</div>
+                    <div style={{ width: 450, height: 450 }}> {retirementData?.length ? <MyResponsiveBar data={retirementData} /> : <></>}</div>
+                    <h2>Monthly Budget</h2>
+                    <div>Monthly Income: {analytics.incomeAnalysis?.monthlyIncome}</div>
+                    <div>Total Monthly Bills: {analytics.incomeAnalysis?.totalMonthlyBills}</div>
+                    <div style={{ width: 750, height: 550 }}> {lineData?.length ? <MyResponsiveLine data={lineData} /> : <></>}</div>
+                    <br></br>
+                </div>
+            </div>
+        </>
     )
 }

@@ -88,7 +88,7 @@ export const ScoreSheet = () => {
 
         let currentAnswer = () => currentAnswerList.find(answer => answer.question_id === question.id)
         if (question.type === 'select') {
-            return <div className="form-group" key={question.id}>
+            return <div className="form-group form-width" key={question.id}>
                 <label >{question.text}</label>
                 {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
@@ -105,7 +105,7 @@ export const ScoreSheet = () => {
                 </select>
             </div>
         } else if (question.type === 'radio') {
-            return <div className="form-group" key={question.id}>
+            return <div className="form-group form-width" key={question.id}>
                 <label >{question.text}</label>
                 {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
@@ -122,7 +122,7 @@ export const ScoreSheet = () => {
                 })}
             </div>
         } else if (question.type === 'input') {
-            return <div className="form-group" key={question.id}>
+            return <div className="form-group form-width" key={question.id}>
                 <label >{question.text}</label>
                 {question.explanation ? <Button key={question.id} variant="outline-dark" onClick={(e) => {
                     e.preventDefault()
@@ -153,34 +153,38 @@ export const ScoreSheet = () => {
 
     return (
         <>
-            <form>
-                <h2>Answer Form</h2>
-                <fieldset>
-                    {currentPage === 0 && newQuestions.slice(0, 10)}
-                    {currentPage === 1 && newQuestions.slice(10, 20)}
-                    {currentPage === 2 && newQuestions.slice(20, 29)}
-                </fieldset>
-                {currentPage !== 0 && <Button key="goBack" variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
-                {currentPage !== 2 && <Button key="goForward" variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}
-                {currentPage === 2 && <Button key="submit" className="submitButton" type="submit"
-                    onClick={evt => {
-                        // Prevent form from being submitted
-                        evt.preventDefault()
-                        if (currentAnswerList[0].id) {
-                            // Send PUT request to API
-                            editAnswer(currentAnswerList)
-                                .then(() => history.push("/"))
-                        } else {
-                            // Send POST request to API
-                            createAnswer(currentAnswerList)
-                                .then(() => history.push("/answers"))
+            <div className="flex">
+                <div className="container-left"></div>
+                <form id="scoresheet">
+                    <h2>Answer Form</h2>
+                    <fieldset>
+                        {currentPage === 0 && newQuestions.slice(0, 10)}
+                        {currentPage === 1 && newQuestions.slice(10, 20)}
+                        {currentPage === 2 && newQuestions.slice(20, 29)}
+                    </fieldset>
+                    {currentPage !== 0 && <Button key="goBack" variant="outline-secondary" className="goBackButton" onClick={goBack}>back</Button>}
+                    {currentPage !== 2 && <Button key="goForward" variant="outline-secondary" className="goForwardButton" onClick={goForward}>next</Button>}
+                    {currentPage === 2 && <Button key="submit" className="submitButton" type="submit"
+                        onClick={evt => {
+                            // Prevent form from being submitted
+                            evt.preventDefault()
+                            if (currentAnswerList[0].id) {
+                                // Send PUT request to API
+                                editAnswer(currentAnswerList)
+                                    .then(() => history.push("/"))
+                            } else {
+                                // Send POST request to API
+                                createAnswer(currentAnswerList)
+                                    .then(() => history.push("/answers"))
+                            }
                         }
-                    }
-                    }
-                     variant="outline-primary" >{currentAnswerList[0]?.id ? "Submit Update" : "Submit Answers"}</Button>}
+                        }
+                        variant="outline-primary" >{currentAnswerList[0]?.id ? "Submit Update" : "Submit Answers"}</Button>}
 
 
-            </form >
+                </form >
+                <div className="container-right"></div>
+            </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Body>{questionExplanation}</Modal.Body>
                 <Modal.Footer>
